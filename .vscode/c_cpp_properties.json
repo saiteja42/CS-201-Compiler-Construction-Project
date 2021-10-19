@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/yin/Documents/Repo/LLVM-12/install/include"
+            ],
+            "defines": [],
+            "compilerPath": "/home/yin/Documents/Repo/LLVM-12/install/bin//clang"
+        }
+    ],
+    "version": 4
+}

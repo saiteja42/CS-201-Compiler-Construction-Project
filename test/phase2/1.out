@@ -1,0 +1,17 @@
+AvailExpression: test
+----- entry -----
+GEN: 
+KILL: c 
+Available: 
+----- if.then -----
+GEN: b+c 
+KILL: b e 
+Available: b+c 
+----- if.else -----
+GEN: b+c 
+KILL: e 
+Available: b+c 
+----- if.end -----
+GEN: b+c 
+KILL: a 
+Available: b+c 

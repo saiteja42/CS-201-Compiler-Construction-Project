@@ -1,0 +1,58 @@
+ReachingDefinition: _Z4testv
+Block: entry
+	1:   %y = alloca i32, align 4
+	2:   %x = alloca i32, align 4
+	3:   %z = alloca i32, align 4
+	4:   store i32 3, i32* %y, align 4
+	5:   store i32 10, i32* %x, align 4
+	6:   store i32 11, i32* %y, align 4
+	7:   %0 = load i32, i32* %x, align 4
+	8:   %1 = load i32, i32* %y, align 4
+	9:   %cmp = icmp sgt i32 %0, %1
+	10:   br i1 %cmp, label %if.then, label %if.else
+Block: if.then
+	11:   %2 = load i32, i32* %x, align 4
+	12:   %add = add nsw i32 %2, 1
+	13:   store i32 %add, i32* %x, align 4
+	14:   %3 = load i32, i32* %x, align 4
+	15:   %add1 = add nsw i32 %3, 2
+	16:   store i32 %add1, i32* %y, align 4
+	17:   br label %if.end
+Block: if.else
+	18:   %4 = load i32, i32* %x, align 4
+	19:   store i32 %4, i32* %z, align 4
+	20:   store i32 4, i32* %x, align 4
+	21:   br label %if.end
+Block: if.end
+	22:   ret void
+
+----- entry -----
+GEN: 5 6 
+KILL: 4 6 13 16 20 
+IN: 
+OUT: 5 6 
+----- if.then -----
+GEN: 13 16 
+KILL: 4 5 6 20 
+IN: 5 6 
+OUT: 13 16 
+----- if.else -----
+GEN: 19 20 
+KILL: 5 13 
+IN: 5 6 
+OUT: 6 19 20 
+----- if.end -----
+GEN: 
+KILL: 
+IN: 6 13 16 19 20 
+OUT: 6 13 16 19 20 
+
+----- Constant propagation analysis -----
+----- entry -----
+Number of constants propagated: 2
+----- if.then -----
+Number of constants propagated: 1
+----- if.else -----
+Number of constants propagated: 1
+----- if.end -----
+Number of constants propagated: 0
